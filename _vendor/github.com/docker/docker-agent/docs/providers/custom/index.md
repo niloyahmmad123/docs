@@ -156,7 +156,7 @@ Only applicable for OpenAI-compatible providers (when `provider` is `openai` or 
 - **`openai_chatcompletions`** — Standard OpenAI Chat Completions API. Works with most OpenAI-compatible endpoints.
 - **`openai_responses`** — OpenAI Responses API. For newer models that require the Responses API format.
 
-> If `api_type` is not set, docker-agent automatically selects the API type based on the model name. You only need to set `api_type` explicitly to override the detected default.
+> If `api_type` is not set, Docker Agent automatically selects the API type based on the model name. You only need to set `api_type` explicitly to override the detected default.
 
 ## Examples
 
@@ -302,3 +302,9 @@ When you reference a provider:
 3. All model-level defaults (temperature, max_tokens, thinking_budget, etc.) are inherited (model settings take precedence)
 4. For OpenAI-compatible providers, the `api_type` is stored in `provider_opts.api_type`
 5. The model is used with the appropriate API client
+
+A provider with a `base_url` implies `bypass_models_gateway: true` for every
+model that references it: user-chosen endpoints are never routed through a
+configured models gateway, and such models authenticate with the provider's
+own credentials (`token_key`). See
+[Gateway Bypass](../../configuration/models/index.md#gateway-bypass).
